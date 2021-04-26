@@ -1,5 +1,6 @@
 import os
-version = '0.0.0.1.1'
+import p23control.Test
+
 def get_test_files():
     files = []
     for entry in os.listdir('p18test'):
@@ -14,6 +15,16 @@ inProgress = []
 done = []
 released = []
 
+for file in files:
+    version = p23control.Symbol.resolve('p18test.'+file+'.versions')['0.0.0.1.1']
+    for func in version.keys():
+        valid = p23control.Test.main(file,func)
+        if not valid:
+            inProgress.append(func)
+        else:
+            done.append(func)
+
+version = '0.0.0.1.1'
 
 buffer = ''
 buffer = buffer + '''<!DOCTYPE html>
@@ -36,11 +47,16 @@ buffer = buffer + '''<table>
 <td></td>
 <td>'''
 
-for i in files:
+for i in inProgress:
     buffer = buffer + i
 
 buffer = buffer + '''</td>
-<td></td>
+<td>'''
+
+for i in done:
+    buffer = buffer + i
+
+buffer = buffer + '''</td>
 <td></td>
 </tr>
 </table>
