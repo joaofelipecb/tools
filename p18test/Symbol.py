@@ -8,7 +8,7 @@ versions['0.0.0.1.1']['resolve_module'] = {}
 versions['0.0.0.1.1']['resolve_module']['basic'] = {
         'given':{'expression':'math.pi'},
         'then':[
-                'result = '+str(math.pi)
+                '_result == '+str(math.pi)
                 ]
         }
 

@@ -13,7 +13,11 @@ def main(module, function):
     try:
         test = p23control.Symbol.resolve('p18test.'+module+'.versions')[p17data.Config.version][function]
         testResult['complete'] = True
-        func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
+        try:
+            func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
+        except:
+            testResult['valid'] = False
+            return testResult
         valid = True
         complete = True
         for testName, testRoutine in test.items():
@@ -22,19 +26,18 @@ def main(module, function):
             complete = complete and testResult['tests'][testName]['complete']
         testResult['valid'] = valid
         testResult['complete'] = complete
-    except:
-        testResult['valid'] = False
     finally:
         finish_sandbox()
     return testResult
 
 def test_item(testFunction, testName, testRoutine):
+    namespace = {}
     testResult = {}
     testResult['complete'] = False
     testResult['valid'] = False
     if not testRoutine:
         return testResult
-    testFunction(**testRoutine['given'])
+    namespace['_result'] = testFunction(**testRoutine['given'])
     if isinstance(testRoutine['then'],list):
         thens = testRoutine['then']
     else:
@@ -43,7 +46,7 @@ def test_item(testFunction, testName, testRoutine):
     complete = True
     testResult['thens'] = {}
     for then in thens:
-        testResult['thens'][then] = test_item_then(then)
+        testResult['thens'][then] = p23control.Symbol.resolve(then,namespace)
         valid = valid and testResult['thens'][then]
     testResult['valid'] = valid
     testResult['complete'] = complete
