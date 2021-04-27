@@ -13,6 +13,8 @@ def get_test_files():
 def draw_box(stack):
     buffer = ''
     for file, behaviors in stack.items():
+        if len(behaviors) == 0:
+            continue
         buffer = buffer + '<div><h2>'+file+'</h2><ul>'
         for behavior in behaviors:
             buffer = buffer + '<li>' + behavior['name']
