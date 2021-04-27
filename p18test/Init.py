@@ -34,3 +34,6 @@ versions['0.0.0.1.2']['create_files']['basic'] = {
                 'os.path.exists(\'p22enviroment/Enviroment.py\')',
                 ]
         }
+
+versions['0.0.0.1.2']['create_files']['file_verification'] = {}
+versions['0.0.0.1.2']['create_files']['file_verification_formated'] = {}

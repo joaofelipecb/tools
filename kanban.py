@@ -23,6 +23,11 @@ def draw_box(stack):
             buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(behavior['data']).replace('\\n','<br>') + '</pre>'
             buffer = buffer + '</li>'
             for testName, test in behavior['test'].items():
+                buffer = buffer + '<li>' + testName + ':'
+                if not test:
+                    buffer = buffer + '<b>not implemented</b></li>'
+                    continue
+                buffer = buffer + '<ul>'
                 buffer = buffer + '<li>Given'
                 buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(test['given']).replace('\\n','<br>') + '</pre>'
                 buffer = buffer + '</li>'
@@ -41,6 +46,7 @@ def draw_box(stack):
                     buffer = buffer + '</li>'
                 buffer = buffer + '</ul>'
                 buffer = buffer + '</li>'
+                buffer = buffer + '</ul>'
                 buffer = buffer + '</li>'
             buffer = buffer + '</ul>'
             buffer = buffer + '</li>'
@@ -60,13 +66,15 @@ for file in files:
     inProgress[file] = []
     done[file] = []
     released[file] = []
-    for func in versionTest.keys():
+    for testFunctionName, testFunction in versionTest.items():
         behavior = {}
-        behavior['name'] = func
-        behavior['data'] = versionData[func]
-        behavior['test'] = versionTest[func]
-        behavior['testResult'] = p23control.Test.main(file,func)
-        if not behavior['testResult']['valid']:
+        behavior['name'] = testFunctionName
+        behavior['data'] = versionData[testFunctionName]
+        behavior['test'] = versionTest[testFunctionName]
+        behavior['testResult'] = p23control.Test.main(file,testFunctionName)
+        if not behavior['testResult']['complete']:
+            backlog[file].append(behavior)
+        elif not behavior['testResult']['valid']:
             inProgress[file].append(behavior)
         else:
             done[file].append(behavior)
@@ -89,7 +97,11 @@ buffer = buffer + '''<table style="width:100%;table-layout:fixed;">
 <th>Released</th>
 </tr>
 <tr>
-<td style="vertical-align:top;"></td>
+<td style="vertical-align:top;">'''
+
+buffer = buffer + draw_box(backlog)
+
+buffer = buffer + '''</td>
 <td style="vertical-align:top;">'''
 
 buffer = buffer + draw_box(inProgress)
