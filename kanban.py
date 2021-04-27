@@ -20,7 +20,8 @@ def draw_box(stack):
             buffer = buffer + '<li>' + behavior['name']
             buffer = buffer + '<ul>'
             buffer = buffer + '<li>When'
-            buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(behavior['data']).replace('\\n','<br>') + '</pre>'
+            if 'data' in behavior:
+                buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(behavior['data']).replace('\\n','<br>') + '</pre>'
             buffer = buffer + '</li>'
             for testName, test in behavior['test'].items():
                 buffer = buffer + '<li>' + testName + ':'
@@ -69,7 +70,8 @@ for file in files:
     for testFunctionName, testFunction in versionTest.items():
         behavior = {}
         behavior['name'] = testFunctionName
-        behavior['data'] = versionData[testFunctionName]
+        if testFunctionName in versionData:
+            behavior['data'] = versionData[testFunctionName]
         behavior['test'] = versionTest[testFunctionName]
         behavior['testResult'] = p23control.Test.main(file,testFunctionName)
         if not behavior['testResult']['complete']:

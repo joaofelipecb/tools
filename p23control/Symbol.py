@@ -2,18 +2,18 @@ import p17data.Config
 import p17data.Symbol
 
 def resolve(expression,namespace=None):
-    if expression == '_result':
-        return namespace['_result']
-    if expression[0] >= '0' and expression[0] <= '9':
-        if expression.find('.') != -1:
-            return float(expression)
-        else:
-            return int(expression)
-    if expression[0] == '\'' and expression[-1] == '\'':
-        return expression[1:-1]
-    if expression.find('==') != -1:
+    version = p17data.Symbol.versions[p17data.Config.version]
+    if expression == version['resultVariable']:
+        return resolve_variable(expression,namespace)
+    if expression in version['booleansLiterals']:
+        return resolve_boolean_literal(expression,namespace)
+    if expression[0] >= version['numericDigitMin'] and expression[0] <= version['numericDigitMax']:
+        return resolve_numeric_literal(expression,namespace)
+    if expression[0] == version['stringLiteralBegin'] and expression[-1] == version['stringLiteralEnd']:
+        return resolve_string_literal(expression)
+    if expression.find(version['conditions']['equal']) != -1:
         return resolve_condition(expression,namespace)
-    if expression.find('(') != -1:
+    if expression.find(version['functionArgumentBegin']) != -1:
         return resolve_function(expression,namespace)
     return resolve_module(expression,namespace)
 
@@ -27,6 +27,20 @@ def resolve_module(expression,namespace=None):
         pointer = pointer.__getattribute__(i)
     return pointer.__getattribute__(last)
 
+def resolve_boolean_literal(expression,namespace=None):
+    version = p17data.Symbol.versions[p17data.Config.version]
+    return True if expression == version['resolve_boolean_literal']['booleansLiterals'][1] else False
+
+def resolve_numeric_literal(expression,namespace=None):
+    version = p17data.Symbol.versions[p17data.Config.version]
+    if expression.find(version['resolve_numeric_literal']['numericFractionalDigit']) != -1:
+        return float(expression)
+    else:
+        return int(expression)
+
+def resolve_string_literal(expression,namespace=None):
+    return expression[1:-1]
+
 def resolve_function(expression,namespace=None):
     funcName, argsName = split_func_args(expression)
     func = resolve(funcName)
@@ -34,9 +48,10 @@ def resolve_function(expression,namespace=None):
     return func(*args)
 
 def split_func_args(expression):
-    pos = expression.index('(')
+    version = p17data.Symbol.versions[p17data.Config.version]
+    pos = expression.index(version['resolve_function']['functionArgumentBegin'])
     func = expression[0:pos]
-    args = expression[pos+1:-1].split(',')
+    args = expression[pos+1:-1].split(version['resolve_function']['functionArgumentSeparator'])
     return func, args
 
 def resolve_condition(expression,namespace=None):
@@ -45,8 +60,13 @@ def resolve_condition(expression,namespace=None):
     return operators[0] == operators[1]
 
 def split_condition(expression):
-    pos = expression.index('==')
+    version = p17data.Symbol.versions[p17data.Config.version]
+    pos = expression.index(version['resolve_condition']['conditions']['equal'])
     operators = []
     operators.append(str.strip(expression[0:pos]))
     operators.append(str.strip(expression[pos+2:]))
     return operators
+
+def resolve_variable(expression,namespace=None):
+    return namespace[expression]
+
