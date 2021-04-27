@@ -1,4 +1,5 @@
 import os
+import p17data.Config
 import p23control.Test
 
 def get_test_files():
@@ -16,15 +17,13 @@ done = []
 released = []
 
 for file in files:
-    version = p23control.Symbol.resolve('p18test.'+file+'.versions')['0.0.0.1.1']
+    version = p23control.Symbol.resolve('p18test.'+file+'.versions')[p17data.Config.version]
     for func in version.keys():
         valid = p23control.Test.main(file,func)
         if not valid:
             inProgress.append(func)
         else:
             done.append(func)
-
-version = '0.0.0.1.1'
 
 buffer = ''
 buffer = buffer + '''<!DOCTYPE html>
@@ -34,7 +33,7 @@ buffer = buffer + '''<!DOCTYPE html>
 </head>
 <body>
 <h1>{title}</h1>
-'''.format(title=version)
+'''.format(title=p17data.Config.version)
 
 buffer = buffer + '''<table>
 <tr>
@@ -66,7 +65,7 @@ buffer = buffer + '''
 </body>
 </html>
 '''
-
 with open('kanban.html','w') as f:
     f.writelines(buffer)
 
+print('saved')

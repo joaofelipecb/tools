@@ -1,3 +1,4 @@
+import copy
 versions = {}
 versions['0.0.0.1.1'] = {}
 
@@ -5,7 +6,8 @@ versions['0.0.0.1.1']['create_directories'] = {}
 
 versions['0.0.0.1.1']['create_directories']['basic'] = {
         'given':{},
-        'then':['os.path.exists(\'p17data\')',
+        'then':[
+                'os.path.exists(\'p17data\')',
                 'os.path.exists(\'p18test\')',
                 'os.path.exists(\'p19version\')',
                 'os.path.exists(\'p20branch\')',
@@ -20,3 +22,15 @@ versions['0.0.0.1.1']['create_directories']['basic'] = {
                 ]
         }
 
+versions['0.0.0.1.2'] = copy.deepcopy(versions['0.0.0.1.1'])
+
+versions['0.0.0.1.2']['create_files'] = {}
+versions['0.0.0.1.2']['create_files']['basic'] = {
+        'given':{},
+        'then':[
+                'os.path.exists(\'p19verion/Version.py\')',
+                'os.path.exists(\'p20branch/Branch.py\')',
+                'os.path.exists(\'p21framework/Framework.py\')',
+                'os.path.exists(\'p22enviroment/Enviroment.py\')',
+                ]
+        }

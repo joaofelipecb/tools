@@ -1,10 +1,12 @@
+import copy
 versions = {}
 versions['0.0.0.1.1'] = {}
 
 versions['0.0.0.1.1']['directories'] = ['p17data','p18test','p19version','p20branch','p21framework','p22enviroment','p23control','p24command','p25interface','p26struct','p27develop','p28except']
 
-versions['0.0.0.1.1']['files'] = []
-versions['0.0.0.1.1']['files'].append({
+versions['0.0.0.1.2'] = copy.deepcopy(versions['0.0.0.1.1'])
+versions['0.0.0.1.2']['files'] = []
+versions['0.0.0.1.2']['files'].append({
     'path':'p19version/Version.py',
     'content':'''import datetime
 
@@ -18,7 +20,7 @@ versions['0.0.0.1.1']['branches'] = {{}}
 '''
     })
 
-versions['0.0.0.1.1']['files'].append({
+versions['0.0.0.1.2']['files'].append({
     'path':'p20branch/Branch.py',
     'content':'''import math
 import p19version.Version
@@ -32,7 +34,7 @@ branches['master']['frameworks'] = {{}}
 '''
     })
 
-versions['0.0.0.1.1']['files'].append({
+versions['0.0.0.1.2']['files'].append({
     'path':'p21framework/Framework.py',
     'content':'''import math
 import p19version.Version
@@ -49,7 +51,7 @@ frameworks['scratch']['enviroments'] = {{}}
 '''
     })
 
-versions['0.0.0.1.1']['files'].append({
+versions['0.0.0.1.2']['files'].append({
     'path':'p22enviroment/Enviroment.py',
     'content':'''import math
 import p19version.Version

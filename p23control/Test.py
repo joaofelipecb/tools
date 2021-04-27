@@ -5,7 +5,11 @@ import p23control.Symbol
 
 def main(module, function):
     initiate_sandbox()
-    func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
+    try:
+        func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
+    except:
+        finish_sandbox()
+        return False
     test = p23control.Symbol.resolve('p18test.'+module+'.versions')['0.0.0.1.1'][function]
     valid = True
     for testName, testRoutine in test.items():
