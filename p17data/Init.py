@@ -4,6 +4,9 @@ versions['0.0.0.1.1'] = {}
 
 versions['0.0.0.1.1']['directories'] = ['p17data','p18test','p19version','p20branch','p21framework','p22enviroment','p23control','p24command','p25interface','p26struct','p27develop','p28except']
 
+versions['0.0.0.1.1']['create_directories'] = {}
+versions['0.0.0.1.1']['create_directories']['directories'] = versions['0.0.0.1.1']['directories']
+
 versions['0.0.0.1.2'] = copy.deepcopy(versions['0.0.0.1.1'])
 versions['0.0.0.1.2']['files'] = []
 versions['0.0.0.1.2']['files'].append({
@@ -66,3 +69,6 @@ enviroments['production'] = {{}}
 enviroments['test'] = {{}}
 '''
     })
+
+versions['0.0.0.1.2']['create_files'] = {}
+versions['0.0.0.1.2']['create_files']['files'] = versions['0.0.0.1.2']['files']

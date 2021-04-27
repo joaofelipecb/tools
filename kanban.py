@@ -10,20 +10,55 @@ def get_test_files():
             files.append(filename)
     return files
 
+def draw_box(stack):
+    buffer = ''
+    for file, behaviors in stack.items():
+        buffer = buffer + '<div><h2>'+file+'</h2><ul>'
+        for behavior in behaviors:
+            buffer = buffer + '<li>' + behavior['name']
+            buffer = buffer + '<ul>'
+            buffer = buffer + '<li>When'
+            buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(behavior['data']).replace('\\n','<br>') + '</pre>'
+            buffer = buffer + '</li>'
+            for testName, test in behavior['test'].items():
+                buffer = buffer + '<li>Given'
+                buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(test['given']).replace('\\n','<br>') + '</pre>'
+                buffer = buffer + '</li>'
+                buffer = buffer + '<li>Then'
+                buffer = buffer + '<ul>'
+                for then in test['then']:
+                    buffer = buffer + '<li><pre style="white-space:pre-wrap;">' + str(then).replace('\\n','<br>') + '</pre></li>'
+                buffer = buffer + '</ul>'
+                buffer = buffer + '</li>'
+                buffer = buffer + '</li>'
+            buffer = buffer + '</ul>'
+            buffer = buffer + '</li>'
+        buffer = buffer + '</ul></div>'
+    return buffer
+
 files = get_test_files()
-backlog = []
-inProgress = []
-done = []
-released = []
+backlog = {}
+inProgress = {}
+done = {}
+released = {}
 
 for file in files:
-    version = p23control.Symbol.resolve('p18test.'+file+'.versions')[p17data.Config.version]
-    for func in version.keys():
+    versionData = p23control.Symbol.resolve('p17data.'+file+'.versions')[p17data.Config.version]
+    versionTest = p23control.Symbol.resolve('p18test.'+file+'.versions')[p17data.Config.version]
+    backlog[file] = []
+    inProgress[file] = []
+    done[file] = []
+    released[file] = []
+    for func in versionTest.keys():
+        behavior = {}
+        behavior['name'] = func
+        behavior['data'] = versionData[func]
+        behavior['test'] = versionTest[func]
         valid = p23control.Test.main(file,func)
         if not valid:
-            inProgress.append(func)
+            inProgress[file].append(behavior)
         else:
-            done.append(func)
+            done[file].append(behavior)
 
 buffer = ''
 buffer = buffer + '''<!DOCTYPE html>
@@ -35,7 +70,7 @@ buffer = buffer + '''<!DOCTYPE html>
 <h1>{title}</h1>
 '''.format(title=p17data.Config.version)
 
-buffer = buffer + '''<table>
+buffer = buffer + '''<table style="width:100%;table-layout:fixed;">
 <tr>
 <th>Backlog</th>
 <th>In Progress</th>
@@ -43,20 +78,18 @@ buffer = buffer + '''<table>
 <th>Released</th>
 </tr>
 <tr>
-<td></td>
-<td>'''
+<td style="vertical-align:top;"></td>
+<td style="vertical-align:top;">'''
 
-for i in inProgress:
-    buffer = buffer + i
-
-buffer = buffer + '''</td>
-<td>'''
-
-for i in done:
-    buffer = buffer + i
+buffer = buffer + draw_box(inProgress)
 
 buffer = buffer + '''</td>
-<td></td>
+<td style="vertical-align:top;">'''
+
+buffer = buffer + draw_box(done)
+
+buffer = buffer + '''</td>
+<td style="vertical-align:top;"></td>
 </tr>
 </table>
 '''
@@ -65,6 +98,7 @@ buffer = buffer + '''
 </body>
 </html>
 '''
+
 with open('kanban.html','w') as f:
     f.writelines(buffer)
 
