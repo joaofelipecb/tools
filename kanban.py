@@ -27,7 +27,16 @@ def draw_box(stack):
                 buffer = buffer + '<li>Then'
                 buffer = buffer + '<ul>'
                 for then in test['then']:
-                    buffer = buffer + '<li><pre style="white-space:pre-wrap;">' + str(then).replace('\\n','<br>') + '</pre></li>'
+                    buffer = buffer + '<li><pre style="white-space:pre-wrap;">' + str(then).replace('\\n','<br>') + '</pre>'
+                    flag = False
+                    if testName in behavior['testResult']['tests']:
+                        if then in behavior['testResult']['tests'][testName]['thens']:
+                            flag = True
+                    if flag:
+                        buffer = buffer + '<b>' + str(behavior['testResult']['tests'][testName]['thens'][then]) + '</b>'
+                    else:
+                        buffer = buffer + '<b>' + str(False) + '</b>'
+                    buffer = buffer + '</li>'
                 buffer = buffer + '</ul>'
                 buffer = buffer + '</li>'
                 buffer = buffer + '</li>'
@@ -54,8 +63,8 @@ for file in files:
         behavior['name'] = func
         behavior['data'] = versionData[func]
         behavior['test'] = versionTest[func]
-        valid = p23control.Test.main(file,func)
-        if not valid:
+        behavior['testResult'] = p23control.Test.main(file,func)
+        if not behavior['testResult']['valid']:
             inProgress[file].append(behavior)
         else:
             done[file].append(behavior)
