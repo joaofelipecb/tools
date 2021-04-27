@@ -28,7 +28,7 @@ versions['0.0.0.1.2']['create_files'] = {}
 versions['0.0.0.1.2']['create_files']['basic'] = {
         'given':{},
         'then':[
-                'os.path.exists(\'p19verion/Version.py\')',
+                'os.path.exists(\'p19version/Version.py\')',
                 'os.path.exists(\'p20branch/Branch.py\')',
                 'os.path.exists(\'p21framework/Framework.py\')',
                 'os.path.exists(\'p22enviroment/Enviroment.py\')',

@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import p17data.Config
 import p23control.Symbol
 
 def main(module, function):
@@ -13,7 +14,7 @@ def main(module, function):
     except:
         finish_sandbox()
         return testResult
-    test = p23control.Symbol.resolve('p18test.'+module+'.versions')['0.0.0.1.1'][function]
+    test = p23control.Symbol.resolve('p18test.'+module+'.versions')[p17data.Config.version][function]
     valid = True
     for testName, testRoutine in test.items():
         testResult['tests'][testName] = test_item(func, testName, testRoutine)
