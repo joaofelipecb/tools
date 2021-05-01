@@ -89,3 +89,10 @@ versions['0.0.0.1.3']['resolve_function']['attributeOfFunction'] = {
                 ]
         }
 
+versions['0.0.0.1.3']['resolve_function']['functionOfFunction'] = {
+        'given':{'expression':'datetime.datetime.strptime(\'1970-01-01\',\'%Y-%m-%d\').strftime(\'%Y\')'},
+        'then':[
+                '_result == \'1970\''
+                ]
+        }
+

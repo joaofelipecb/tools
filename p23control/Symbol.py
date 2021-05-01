@@ -54,7 +54,7 @@ def resolve_string_literal(expression,namespace=None,object=None):
 
 def resolve_function(expression,namespace=None,object=None):
     funcName, argsName, attributeName = split_func_args(expression)
-    func = resolve(funcName)
+    func = resolve(funcName,namespace,object)
     args = [resolve(argName,namespace) for argName in argsName]
     result = func(*args)
     if attributeName is None:
