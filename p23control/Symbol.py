@@ -23,6 +23,8 @@ def resolve_module(expression,namespace=None,object=None):
     moduleSeparation = p17data.Symbol.versions[p17data.Config.version]['moduleSeparation']
     parts = expression.split(moduleSeparation)
     last = parts.pop()
+    if not parts:
+        return __builtins__[last]
     try:
         pointer = __import__(str.join(moduleSeparation,parts))
     except ModuleNotFoundError:
@@ -30,8 +32,6 @@ def resolve_module(expression,namespace=None,object=None):
     parts.pop(0)
     for i in parts:
         pointer = pointer.__getattribute__(i)
-    print(pointer)
-    print(last)
     try:
         pointer = pointer.__getattribute__(last)
     except TypeError:

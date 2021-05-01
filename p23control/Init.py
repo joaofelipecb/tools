@@ -27,4 +27,6 @@ def create_files():
             os.mkdir(dir)
             with open(file['path'],'w') as f:
                 f.writelines(content)
+        finally:
+            f.close()
 
