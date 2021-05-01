@@ -9,14 +9,16 @@ def main(module, function):
     testResult = {}
     testResult['valid'] = False
     testResult['complete'] = False
+    testResult['exception'] = None
     testResult['tests'] = {}
     try:
         test = p23control.Symbol.resolve('p18test.'+module+'.versions')[p17data.Config.version][function]
         testResult['complete'] = True
         try:
             func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
-        except:
+        except Exception as exception:
             testResult['valid'] = False
+            testResult['exception'] = exception
             return testResult
         valid = True
         complete = True
@@ -27,6 +29,7 @@ def main(module, function):
         testResult['valid'] = valid
         testResult['complete'] = complete
     finally:
+        pass
         finish_sandbox()
     return testResult
 
@@ -36,11 +39,13 @@ def test_item(testFunction, testName, testRoutine):
     testResult['complete'] = False
     testResult['valid'] = False
     testResult['thens'] = {}
+    testResult['exception'] = None
     if not testRoutine:
         return testResult
     try:
         namespace['_result'] = testFunction(**testRoutine['given'])
-    except ModuleNotFoundError:
+    except ModuleNotFoundError as exception:
+        testResult['exception'] = exception
         return testResult
     if isinstance(testRoutine['then'],list):
         thens = testRoutine['then']
@@ -52,18 +57,12 @@ def test_item(testFunction, testName, testRoutine):
     for then in thens:
         try:
             testResult['thens'][then] = p23control.Symbol.resolve(then,namespace)
-        except:
-            testResult['thens'][then] = False
+        except Exception as exception:
+            testResult['thens'][then] = exception
         valid = valid and testResult['thens'][then]
     testResult['valid'] = valid
     testResult['complete'] = complete
     return testResult
-
-def test_item_then(then):
-    funcName, argsName = p23control.Symbol.split_func_args(then)
-    func = p23control.Symbol.resolve(funcName)
-    args = [p23control.Symbol.resolve(argName) for argName in argsName]
-    return func(*args)
 
 def initiate_sandbox():
     if not os.path.exists('sandbox'):

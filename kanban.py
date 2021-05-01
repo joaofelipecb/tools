@@ -1,4 +1,5 @@
 import os
+import traceback
 import p17data.Config
 import p23control.Test
 
@@ -41,7 +42,11 @@ def draw_box(stack):
                         if then in behavior['testResult']['tests'][testName]['thens']:
                             flag = True
                     if flag:
-                        buffer = buffer + '<b>' + str(behavior['testResult']['tests'][testName]['thens'][then]) + '</b>'
+                        thenResult = behavior['testResult']['tests'][testName]['thens'][then]
+                        if isinstance(thenResult,Exception):
+                            buffer = buffer + '<b>' + str(traceback.format_exception(None,thenResult,thenResult.__traceback__)) + '</b>'
+                        else:
+                            buffer = buffer + '<b>' + str(thenResult) + '</b>'
                     else:
                         buffer = buffer + '<b>' + str(False) + '</b>'
                     buffer = buffer + '</li>'
