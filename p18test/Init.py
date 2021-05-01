@@ -35,5 +35,21 @@ versions['0.0.0.1.2']['create_files']['basic'] = {
                 ]
         }
 
-versions['0.0.0.1.2']['create_files']['file_verification'] = {}
-versions['0.0.0.1.2']['create_files']['file_verification_formated'] = {}
+versions['0.0.0.1.3'] = copy.deepcopy(versions['0.0.0.1.2'])
+
+versions['0.0.0.1.3']['create_files']['file_verification'] = {
+        'given':{},
+        'then':[
+                '''open(\'p20branch/Branch.py\').read() == 'import math
+import p19version.Version
+
+versions = p19version.Version.versions
+branches = versions['0.0.0.1.1']['branches']
+branches['master'] = {}
+branches['master']['radius'] = 0
+branches['master']['angle'] = 0
+branches['master']['frameworks'] = {}'
+'''
+                ]
+        }
+versions['0.0.0.1.3']['create_files']['file_verification_formated'] = {}

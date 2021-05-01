@@ -35,9 +35,13 @@ def test_item(testFunction, testName, testRoutine):
     testResult = {}
     testResult['complete'] = False
     testResult['valid'] = False
+    testResult['thens'] = {}
     if not testRoutine:
         return testResult
-    namespace['_result'] = testFunction(**testRoutine['given'])
+    try:
+        namespace['_result'] = testFunction(**testRoutine['given'])
+    except ModuleNotFoundError:
+        return testResult
     if isinstance(testRoutine['then'],list):
         thens = testRoutine['then']
     else:
@@ -46,7 +50,10 @@ def test_item(testFunction, testName, testRoutine):
     complete = True
     testResult['thens'] = {}
     for then in thens:
-        testResult['thens'][then] = p23control.Symbol.resolve(then,namespace)
+        try:
+            testResult['thens'][then] = p23control.Symbol.resolve(then,namespace)
+        except:
+            testResult['thens'][then] = False
         valid = valid and testResult['thens'][then]
     testResult['valid'] = valid
     testResult['complete'] = complete

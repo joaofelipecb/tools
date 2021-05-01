@@ -21,11 +21,20 @@ def resolve_module(expression,namespace=None):
     moduleSeparation = p17data.Symbol.versions[p17data.Config.version]['moduleSeparation']
     parts = expression.split(moduleSeparation)
     last = parts.pop()
-    pointer = __import__(str.join(moduleSeparation,parts))
+    try:
+        pointer = __import__(str.join(moduleSeparation,parts))
+    except ModuleNotFoundError:
+        pointer = __import__(parts[0])
     parts.pop(0)
     for i in parts:
         pointer = pointer.__getattribute__(i)
-    return pointer.__getattribute__(last)
+    print(pointer)
+    print(last)
+    try:
+        pointer = pointer.__getattribute__(last)
+    except TypeError:
+        pointer = getattr(pointer,last)
+    return pointer
 
 def resolve_boolean_literal(expression,namespace=None):
     version = p17data.Symbol.versions[p17data.Config.version]
@@ -43,6 +52,8 @@ def resolve_string_literal(expression,namespace=None):
 
 def resolve_function(expression,namespace=None):
     funcName, argsName = split_func_args(expression)
+    print(funcName)
+    print(argsName)
     func = resolve(funcName)
     args = [resolve(argName,namespace) for argName in argsName]
     return func(*args)
