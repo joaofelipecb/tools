@@ -45,7 +45,7 @@ def test_item(testFunction, testName, testRoutine):
         return testResult
     try:
         namespace['_result'] = testFunction(**testRoutine['given'])
-    except ModuleNotFoundError as exception:
+    except Exception as exception:
         testResult['exception'] = exception
         return testResult
     if isinstance(testRoutine['then'],list):

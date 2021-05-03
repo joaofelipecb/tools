@@ -98,3 +98,10 @@ versions['0.0.0.1.3']['resolve_function']['functionOfFunction'] = {
 
 versions['0.0.0.1.4'] = copy.deepcopy(versions['0.0.0.1.3'])
 
+versions['0.0.0.1.4']['resolve_function']['functionWithoutArgs'] = {
+        'given':{'expression':'bool()'},
+        'then':[
+                '_result == False'
+                ]
+        }
+
