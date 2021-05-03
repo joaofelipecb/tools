@@ -3,6 +3,7 @@ import os
 import shutil
 import tools.p17data.Config
 import tools.p23control.Symbol
+import p17data.Config
 
 def main(module, function):
     initiate_sandbox()

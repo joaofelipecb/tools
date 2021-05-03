@@ -13,6 +13,7 @@ def change_base_dir():
 
 change_base_dir()
 import tools.p23control.Test
+import tools.p23control.Symbol
 import p17data.Config
 
 def get_test_files():
@@ -78,8 +79,8 @@ done = {}
 released = {}
 
 for file in files:
-    versionData = p23control.Symbol.resolve('p17data.'+file+'.versions')[p17data.Config.version]
-    versionTest = p23control.Symbol.resolve('p18test.'+file+'.versions')[p17data.Config.version]
+    versionData = tools.p23control.Symbol.resolve('p17data.'+file+'.versions')[p17data.Config.version]
+    versionTest = tools.p23control.Symbol.resolve('p18test.'+file+'.versions')[p17data.Config.version]
     backlog[file] = []
     inProgress[file] = []
     done[file] = []
@@ -90,7 +91,7 @@ for file in files:
         if testFunctionName in versionData:
             behavior['data'] = versionData[testFunctionName]
         behavior['test'] = versionTest[testFunctionName]
-        behavior['testResult'] = p23control.Test.main(file,testFunctionName)
+        behavior['testResult'] = tools.p23control.Test.main(file,testFunctionName)
         if not behavior['testResult']['complete']:
             backlog[file].append(behavior)
         elif not behavior['testResult']['valid']:
