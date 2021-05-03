@@ -54,5 +54,7 @@ branches['master']['frameworks'] = {}
                 ]
         }
 
+versions['0.0.0.1.4'] = copy.deepcopy(versions['0.0.0.1.3'])
+
 #versions['0.0.0.1.3']['create_files']['file_verification_formated'] = {}
 #add p17data/Config.py file

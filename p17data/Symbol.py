@@ -54,3 +54,4 @@ versions['0.0.0.1.3'] = copy.deepcopy(versions['0.0.0.1.2'])
 versions['0.0.0.1.3']['resolve_function']['moduleSeparation'] = versions['0.0.0.1.3']['moduleSeparation']
 
 
+versions['0.0.0.1.4'] = copy.deepcopy(versions['0.0.0.1.3'])
