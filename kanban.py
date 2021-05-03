@@ -1,7 +1,19 @@
 import os
+import sys
 import traceback
+
+def change_base_dir():
+    this_path = os.path.split(__file__)[0]
+    this_path = os.path.split(this_path)[0]
+    if this_path not in sys.path:
+        sys.path.insert(0,this_path)
+    this_path = os.getcwd()
+    if this_path not in sys.path:
+        sys.path.insert(0,this_path)
+
+change_base_dir()
+import tools.p23control.Test
 import p17data.Config
-import p23control.Test
 
 def get_test_files():
     files = []

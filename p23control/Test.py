@@ -1,8 +1,8 @@
 import sys
 import os
 import shutil
-import p17data.Config
-import p23control.Symbol
+import tools.p17data.Config
+import tools.p23control.Symbol
 
 def main(module, function):
     initiate_sandbox()
@@ -12,10 +12,10 @@ def main(module, function):
     testResult['exception'] = None
     testResult['tests'] = {}
     try:
-        test = p23control.Symbol.resolve('p18test.'+module+'.versions')[p17data.Config.version][function]
+        test = tools.p23control.Symbol.resolve('p18test.'+module+'.versions')[p17data.Config.version][function]
         testResult['complete'] = True
         try:
-            func = p23control.Symbol.resolve('p23control.'+module+'.'+function)
+            func = tools.p23control.Symbol.resolve('p23control.'+module+'.'+function)
         except Exception as exception:
             testResult['valid'] = False
             testResult['exception'] = exception
@@ -56,7 +56,7 @@ def test_item(testFunction, testName, testRoutine):
     testResult['thens'] = {}
     for then in thens:
         try:
-            testResult['thens'][then] = p23control.Symbol.resolve(then,namespace)
+            testResult['thens'][then] = tools.p23control.Symbol.resolve(then,namespace)
         except Exception as exception:
             testResult['thens'][then] = exception
         valid = valid and testResult['thens'][then]

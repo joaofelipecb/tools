@@ -40,7 +40,7 @@ versions['0.0.0.1.3'] = copy.deepcopy(versions['0.0.0.1.2'])
 versions['0.0.0.1.3']['create_files']['file_verification'] = {
         'given':{},
         'then':[
-                '''p23control.File.read(\'p20branch/Branch.py\') == 'import math
+                '''tools.p23control.File.read(\'p20branch/Branch.py\') == 'import math
 import p19version.Version
 
 versions = p19version.Version.versions
@@ -55,3 +55,4 @@ branches['master']['frameworks'] = {}
         }
 
 #versions['0.0.0.1.3']['create_files']['file_verification_formated'] = {}
+#add p17data/Config.py file

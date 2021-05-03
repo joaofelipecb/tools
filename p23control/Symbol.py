@@ -1,8 +1,8 @@
-import p17data.Config
-import p17data.Symbol
+import tools.p17data.Config
+import tools.p17data.Symbol
 
 def resolve(expression,namespace=None,object=None):
-    version = p17data.Symbol.versions[p17data.Config.version]
+    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     if expression == version['resultVariable']:
         return resolve_variable(expression,namespace,object)
     if expression in version['booleansLiterals']:
@@ -20,7 +20,7 @@ def resolve(expression,namespace=None,object=None):
     return resolve_module(expression,namespace,object)
 
 def resolve_module(expression,namespace=None,object=None):
-    moduleSeparation = p17data.Symbol.versions[p17data.Config.version]['moduleSeparation']
+    moduleSeparation = tools.p17data.Symbol.versions[tools.p17data.Config.version]['moduleSeparation']
     parts = expression.split(moduleSeparation)
     last = parts.pop()
     if not parts:
@@ -39,11 +39,11 @@ def resolve_module(expression,namespace=None,object=None):
     return pointer
 
 def resolve_boolean_literal(expression,namespace=None,object=None):
-    version = p17data.Symbol.versions[p17data.Config.version]
+    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     return True if expression == version['resolve_boolean_literal']['booleansLiterals'][1] else False
 
 def resolve_numeric_literal(expression,namespace=None,object=None):
-    version = p17data.Symbol.versions[p17data.Config.version]
+    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     if expression.find(version['resolve_numeric_literal']['numericFractionalDigit']) != -1:
         return float(expression)
     else:
@@ -62,7 +62,7 @@ def resolve_function(expression,namespace=None,object=None):
     return resolve(attributeName,object=result)
 
 def split_func_args(expression):
-    version = p17data.Symbol.versions[p17data.Config.version]
+    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     posArgBegin = expression.index(version['resolve_function']['functionArgumentBegin'])
     posArgEnd = expression.index(version['resolve_function']['functionArgumentEnd'])
     func = expression[0:posArgBegin]
@@ -81,7 +81,7 @@ def resolve_condition(expression,namespace=None,object=None):
     return operators[0] == operators[1]
 
 def split_condition(expression):
-    version = p17data.Symbol.versions[p17data.Config.version]
+    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     pos = expression.index(version['resolve_condition']['conditions']['equal'])
     operators = []
     operators.append(str.strip(expression[0:pos]))
