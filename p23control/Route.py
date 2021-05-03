@@ -9,7 +9,7 @@ def route(path):
     for route, call in routes.items():
         if path == route:
             resolved = tools.p23control.Symbol.resolve(call)
-            return resolved()
+            return resolved
     return str(routes)
 
 def ping():
