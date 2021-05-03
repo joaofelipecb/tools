@@ -66,7 +66,11 @@ def split_func_args(expression):
     posArgBegin = expression.index(version['resolve_function']['functionArgumentBegin'])
     posArgEnd = expression.index(version['resolve_function']['functionArgumentEnd'])
     func = expression[0:posArgBegin]
-    args = expression[posArgBegin+1:posArgEnd].split(version['resolve_function']['functionArgumentSeparator'])
+    argsName = expression[posArgBegin+1:posArgEnd]
+    if len(argsName):
+        args = argsName.split(version['resolve_function']['functionArgumentSeparator'])
+    else:
+        args = []
     attributeName = None
     try:
         posAttrBegin = expression.index(version['resolve_function']['moduleSeparation'],posArgEnd)
