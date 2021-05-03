@@ -5,10 +5,10 @@ def change_base_dir():
     this_path = os.path.split(__file__)[0]
     if this_path not in sys.path:
         sys.path.insert(0,this_path)
+    os.chdir(this_path)
     this_path = os.path.split(this_path)[0]
     if this_path not in sys.path:
         sys.path.insert(0,this_path)
-    os.chdir(this_path)
 
 change_base_dir()
 

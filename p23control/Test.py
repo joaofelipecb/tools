@@ -58,9 +58,10 @@ def test_item(testFunction, testName, testRoutine):
     for then in thens:
         try:
             testResult['thens'][then] = tools.p23control.Symbol.resolve(then,namespace)
+            valid = valid and testResult['thens'][then]
         except Exception as exception:
             testResult['thens'][then] = exception
-        valid = valid and testResult['thens'][then]
+            valid = False
     testResult['valid'] = valid
     testResult['complete'] = complete
     return testResult
