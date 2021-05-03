@@ -105,3 +105,10 @@ versions['0.0.0.1.4']['resolve_function']['functionWithoutArgs'] = {
                 ]
         }
 
+versions['0.0.0.1.4']['resolve_function']['functionAsArgOfFunction'] = {
+        'given':{'expression':'bool(bool())'},
+        'then':[
+                '_result == False'
+                ]
+        }
+
