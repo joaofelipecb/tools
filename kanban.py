@@ -107,7 +107,7 @@ buffer = buffer + '''<!DOCTYPE html>
 </head>
 <body>
 <h1>{title}</h1>
-'''.format(title=p17data.Config.version)
+'''.format(title=p17data.Config.name+' '+p17data.Config.version)
 
 buffer = buffer + '''<table style="width:100%;table-layout:fixed;">
 <tr>
