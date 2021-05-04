@@ -100,10 +100,16 @@ def resolve_function_begin_arg_list(escope,i):
     escope['listMode'] = True
 
 def resolve_function_is_arg_list_end(escope,i):
-    return escope['expression'][i] == ']'
+    return escope['expression'][i] == ']'and len(escope['buffer']) != 0
 
 def resolve_function_end_arg_list(escope,i):
     resolve_function_add_args(escope, i)
+    resolve_function_end_arg_empty_list(escope,i)
+
+def resolve_function_is_arg_empty_list_end(escope,i):
+    return escope['expression'][i] == ']' and len(escope['buffer']) == 0
+
+def resolve_function_end_arg_empty_list(escope,i):
     buffer, args = resolve_function_unstack(escope)
     escope['args'].append(args)
 
