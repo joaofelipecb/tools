@@ -29,7 +29,10 @@ def resolve_module(expression,namespace=None,object=None):
     try:
         pointer = __import__(str.join(moduleSeparation,parts))
     except ModuleNotFoundError:
-        pointer = __import__(parts[0])
+        try:
+            pointer = __import__(parts[0])
+        except ModuleNotFoundError:
+            pointer = __builtins__[parts[0]]
     parts.pop(0)
     for i in parts:
         pointer = pointer.__getattribute__(i)
@@ -61,26 +64,14 @@ def resolve_function(expression,namespace=None,object=None):
         if tools.p24command.Symbol.resolve_function_is_after_call(escope,i):
             return tools.p24command.Symbol.resolve_function_resolve_after_call(escope,i)
         for rule in rules:
+            matched = False
             if resolve(rule['condition'])(escope,i):
+                matched = True
                 resolve(rule['consequence'])(escope,i)
                 break
+        if not matched:
+            raise Exception('No rule matched')
     return tools.p24command.Symbol.resolve_function_finish(escope)
-
-#        if p24command.Symbol.resolve_function_is_begin_args(i):
-#            p24command.Symbol.resolve_function_stack_args(escope)
-#        elif p24command.Symbol.resolve_function_is_end_args(i):
-#            p24command.Symbol.resolve_function_unstack_args(escope)
-#        elif p24command.Symbol.resolve_function_is_separator_args(i):
-#            p24command.Symbol.resolve_function_add_args(escope)
-#        else:
-#            p24command.Symbol.resolve_function_add_buffer(escope)
-#    funcName, argsName, attributeName = split_func_args(expression)
-#    func = resolve(funcName,namespace,object)
-#    args = [resolve(argName,namespace) for argName in argsName]
-#    result = func(*args)
-#    if attributeName is None:
-#        return result
-#    return resolve(attributeName,object=result)
 
 def split_func_args(expression):
     version = tools.p17data.Symbol.versions[tools.p17data.Config.version]

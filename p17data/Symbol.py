@@ -59,7 +59,7 @@ versions['0.0.0.1.4'] = copy.deepcopy(versions['0.0.0.1.3'])
 versions['0.0.0.1.4']['resolve_function']['rules'] = []
 versions['0.0.0.1.4']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_begin_args',
-        'consequence':'tools.p24command.Symbol.resolve_function_stack_args'
+        'consequence':'tools.p24command.Symbol.resolve_function_begin_args'
         })
 versions['0.0.0.1.4']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_separator_args',
@@ -67,16 +67,33 @@ versions['0.0.0.1.4']['resolve_function']['rules'].append({
         })
 versions['0.0.0.1.4']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_end_args',
-        'consequence':'tools.p24command.Symbol.resolve_function_unstack_args'
+        'consequence':'tools.p24command.Symbol.resolve_function_end_args'
         })
 versions['0.0.0.1.4']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_end_no_args',
-        'consequence':'tools.p24command.Symbol.resolve_function_unstack_no_args'
+        'consequence':'tools.p24command.Symbol.resolve_function_end_no_args'
         })
 versions['0.0.0.1.4']['resolve_function']['rules'].append({
-        'condition':'tools.p24command.Symbol.resolve_function_otherwise',
-        'consequence':'tools.p24command.Symbol.resolve_function_add_buffer'
+        'condition':'tools.p24command.Symbol.resolve_function_is_alphanumeric_and_others',
+        'consequence':'tools.p24command.Symbol.resolve_function_add_to_buffer'
         })
 
 versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])
 
+versions['0.0.0.1.5']['listBegin'] = '['
+versions['0.0.0.1.5']['listEnd'] = ']'
+versions['0.0.0.1.5']['listSeparator'] = ','
+versions['0.0.0.1.5']['resolve_function']['listBegin'] = versions['0.0.0.1.5']['listBegin']
+versions['0.0.0.1.5']['resolve_function']['listBegin'] = versions['0.0.0.1.5']['listBegin']
+versions['0.0.0.1.5']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_arg_list_begin',
+        'consequence':'tools.p24command.Symbol.resolve_function_begin_arg_list'
+        })
+versions['0.0.0.1.5']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_arg_list_separator',
+        'consequence':'tools.p24command.Symbol.resolve_function_add_arg_list'
+        })
+versions['0.0.0.1.5']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_arg_list_end',
+        'consequence':'tools.p24command.Symbol.resolve_function_end_arg_list'
+        })
