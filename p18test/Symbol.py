@@ -120,3 +120,9 @@ versions['0.0.0.1.5']['resolve_function']['functionWithListArg'] = {
                 '_result == \'a.b\''
                 ]
         }
+versions['0.0.0.1.5']['resolve_function']['functionWithEmptyArg'] = {
+        'given':{'expression':'str.join(\'.\',[])'},
+        'then':[
+                '_result == \'\''
+                ]
+        }
