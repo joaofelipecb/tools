@@ -1,4 +1,5 @@
 import copy
+import tools.p24command.Symbol
 versions = {}
 versions['0.0.0.1.1'] = {}
 
@@ -55,3 +56,25 @@ versions['0.0.0.1.3']['resolve_function']['moduleSeparation'] = versions['0.0.0.
 
 
 versions['0.0.0.1.4'] = copy.deepcopy(versions['0.0.0.1.3'])
+versions['0.0.0.1.4']['resolve_function']['rules'] = []
+versions['0.0.0.1.4']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_begin_args',
+        'consequence':'tools.p24command.Symbol.resolve_function_stack_args'
+        })
+versions['0.0.0.1.4']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_separator_args',
+        'consequence':'tools.p24command.Symbol.resolve_function_add_args'
+        })
+versions['0.0.0.1.4']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_end_args',
+        'consequence':'tools.p24command.Symbol.resolve_function_unstack_args'
+        })
+versions['0.0.0.1.4']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_end_no_args',
+        'consequence':'tools.p24command.Symbol.resolve_function_unstack_no_args'
+        })
+versions['0.0.0.1.4']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_otherwise',
+        'consequence':'tools.p24command.Symbol.resolve_function_add_buffer'
+        })
+

@@ -1,5 +1,6 @@
 import tools.p17data.Config
 import tools.p17data.Symbol
+import tools.p24command.Symbol
 
 def resolve(expression,namespace=None,object=None):
     version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
@@ -16,6 +17,7 @@ def resolve(expression,namespace=None,object=None):
     if expression.find(version['functionArgumentBegin']) != -1:
         return resolve_function(expression,namespace,object)
     if object is not None:
+        print(object)
         return resolve_variable(expression,namespace,object)
     return resolve_module(expression,namespace,object)
 
@@ -53,18 +55,38 @@ def resolve_string_literal(expression,namespace=None,object=None):
     return expression[1:-1]
 
 def resolve_function(expression,namespace=None,object=None):
-    funcName, argsName, attributeName = split_func_args(expression)
-    func = resolve(funcName,namespace,object)
-    args = [resolve(argName,namespace) for argName in argsName]
-    result = func(*args)
-    if attributeName is None:
-        return result
-    return resolve(attributeName,object=result)
+    escope = {}
+    tools.p24command.Symbol.resolve_function_init(escope,expression,namespace,object)
+    rules = tools.p17data.Symbol.versions[tools.p17data.Config.version]['resolve_function']['rules']
+    for i in range(0,len(expression)):
+        if tools.p24command.Symbol.resolve_function_is_after_call(escope,i):
+            return tools.p24command.Symbol.resolve_function_resolve_after_call(escope,i)
+        for rule in rules:
+            if resolve(rule['condition'])(escope,i):
+                resolve(rule['consequence'])(escope,i)
+                break
+    return tools.p24command.Symbol.resolve_function_finish(escope)
+
+#        if p24command.Symbol.resolve_function_is_begin_args(i):
+#            p24command.Symbol.resolve_function_stack_args(escope)
+#        elif p24command.Symbol.resolve_function_is_end_args(i):
+#            p24command.Symbol.resolve_function_unstack_args(escope)
+#        elif p24command.Symbol.resolve_function_is_separator_args(i):
+#            p24command.Symbol.resolve_function_add_args(escope)
+#        else:
+#            p24command.Symbol.resolve_function_add_buffer(escope)
+#    funcName, argsName, attributeName = split_func_args(expression)
+#    func = resolve(funcName,namespace,object)
+#    args = [resolve(argName,namespace) for argName in argsName]
+#    result = func(*args)
+#    if attributeName is None:
+#        return result
+#    return resolve(attributeName,object=result)
 
 def split_func_args(expression):
     version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
     posArgBegin = expression.index(version['resolve_function']['functionArgumentBegin'])
-    posArgEnd = expression.index(version['resolve_function']['functionArgumentEnd'])
+    posArgEnd = expression.rindex(version['resolve_function']['functionArgumentEnd'])
     func = expression[0:posArgBegin]
     argsName = expression[posArgBegin+1:posArgEnd]
     if len(argsName):
