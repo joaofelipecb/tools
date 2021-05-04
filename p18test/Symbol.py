@@ -112,3 +112,4 @@ versions['0.0.0.1.4']['resolve_function']['functionAsArgOfFunction'] = {
                 ]
         }
 
+versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])

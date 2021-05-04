@@ -78,3 +78,5 @@ versions['0.0.0.1.4']['resolve_function']['rules'].append({
         'consequence':'tools.p24command.Symbol.resolve_function_add_buffer'
         })
 
+versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])
+

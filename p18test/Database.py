@@ -11,3 +11,4 @@ versions['0.0.0.1.4']['connect']['basic'] = {
         'given':{},
         'then':['_result == True']
         }
+versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])

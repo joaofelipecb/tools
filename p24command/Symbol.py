@@ -68,7 +68,4 @@ def resolve_function_is_after_call(escope, i):
 def resolve_function_resolve_after_call(escope, i):
     import tools.p23control.Symbol
     remainder = escope['expression'][i+1:]
-    print(escope['expression'])
-    print(escope['expression'][i+1:])
-    print(type(escope['args'][0]))
     return tools.p23control.Symbol.resolve(remainder,escope['namespace'],escope['args'][0])

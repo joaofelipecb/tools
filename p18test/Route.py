@@ -17,3 +17,5 @@ versions['0.0.0.1.4']['ping']['basic'] = {
         'given':{},
         'then':['_result == \'pong\'']
         }
+
+versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])

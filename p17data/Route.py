@@ -11,3 +11,4 @@ versions['0.0.0.1.4']['routes']['/__ping'] = 'p23control.Route.pong()'
 versions['0.0.0.1.4']['route'] = {}
 versions['0.0.0.1.4']['route']['routes'] = versions['0.0.0.1.4']['routes']
 
+versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])

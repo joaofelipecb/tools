@@ -17,7 +17,6 @@ def resolve(expression,namespace=None,object=None):
     if expression.find(version['functionArgumentBegin']) != -1:
         return resolve_function(expression,namespace,object)
     if object is not None:
-        print(object)
         return resolve_variable(expression,namespace,object)
     return resolve_module(expression,namespace,object)
 
