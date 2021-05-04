@@ -113,3 +113,10 @@ versions['0.0.0.1.4']['resolve_function']['functionAsArgOfFunction'] = {
         }
 
 versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])
+
+versions['0.0.0.1.5']['resolve_function']['functionWithListArg'] = {
+        'given':{'expression':'str.join(\'.\',[\'a\',\'b\'])'},
+        'then':[
+                '_result == \'a.b\''
+                ]
+        }
