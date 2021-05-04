@@ -94,6 +94,10 @@ versions['0.0.0.1.5']['resolve_function']['rules'].append({
         'consequence':'tools.p24command.Symbol.resolve_function_add_arg_list'
         })
 versions['0.0.0.1.5']['resolve_function']['rules'].append({
+        'condition':'tools.p24command.Symbol.resolve_function_is_arg_list_separator_empty',
+        'consequence':'tools.p24command.Symbol.resolve_function_nope'
+        })
+versions['0.0.0.1.5']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_arg_list_end',
         'consequence':'tools.p24command.Symbol.resolve_function_end_arg_list'
         })

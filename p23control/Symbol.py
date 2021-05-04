@@ -16,6 +16,8 @@ def resolve(expression,namespace=None,object=None):
         return resolve_condition(expression,namespace,object)
     if expression.find(version['functionArgumentBegin']) != -1:
         return resolve_function(expression,namespace,object)
+    if expression[0] == version['listBegin'] and expression[-1] == version['listEnd']:
+        return resolve_list_literal(expression,namespace,object)
     if object is not None:
         return resolve_variable(expression,namespace,object)
     return resolve_module(expression,namespace,object)
@@ -55,6 +57,10 @@ def resolve_numeric_literal(expression,namespace=None,object=None):
 
 def resolve_string_literal(expression,namespace=None,object=None):
     return expression[1:-1]
+
+def resolve_list_literal(expression,namespace=None,object=None):
+    items = expression[1:-1].split(',')
+    return [resolve(item) for item in items]
 
 def resolve_function(expression,namespace=None,object=None):
     escope = {}

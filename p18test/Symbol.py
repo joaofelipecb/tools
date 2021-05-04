@@ -127,8 +127,8 @@ versions['0.0.0.1.5']['resolve_function']['functionWithEmptyListArg'] = {
                 ]
         }
 versions['0.0.0.1.5']['resolve_function']['functionWithListArgWithFunction'] = {
-        'given':{'expression':'sorted([int(0),1])'},
+        'given':{'expression':'[int(0),1]'},
         'then':[
-                '_result == \'[0,1]\''
+                '_result == [0,1]'
                 ]
         }

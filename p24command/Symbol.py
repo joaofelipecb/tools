@@ -114,8 +114,14 @@ def resolve_function_end_arg_empty_list(escope,i):
     escope['args'].append(args)
 
 def resolve_function_is_arg_list_separator(escope,i):
-    return escope['expression'][i] == ',' and escope['listMode']
+    return escope['expression'][i] == ',' and escope['listMode'] and len(escope['buffer']) != 0
 
 def resolve_function_add_arg_list(escope, i):
     resolve_function_add_args(escope, i)
+
+def resolve_function_is_arg_list_separator_empty(escope,i):
+    return escope['expression'][i] == ',' and escope['listMode'] and len(escope['buffer']) == 0
+
+def resolve_function_nope(escope, i):
+    pass
 
