@@ -46,6 +46,9 @@ def draw_box(stack):
                 buffer = buffer + '<li>Given'
                 buffer = buffer + '<pre style="white-space:pre-wrap;">' + str(test['given']).replace('\\n','<br>') + '</pre>'
                 buffer = buffer + '</li>'
+                if behavior['testResult']['exception'] is not None:
+                    exception = behavior['testResult']['exception']
+                    buffer = buffer + '<li><b>' + str(traceback.format_exception(None,exception,exception.__traceback__)) + '</b></li>'
                 flag = False
                 if testName in behavior['testResult']['tests']:
                     if 'exception' in behavior['testResult']['tests'][testName]:
