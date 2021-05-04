@@ -120,9 +120,15 @@ versions['0.0.0.1.5']['resolve_function']['functionWithListArg'] = {
                 '_result == \'a.b\''
                 ]
         }
-versions['0.0.0.1.5']['resolve_function']['functionWithEmptyArg'] = {
+versions['0.0.0.1.5']['resolve_function']['functionWithEmptyListArg'] = {
         'given':{'expression':'str.join(\'.\',[])'},
         'then':[
                 '_result == \'\''
+                ]
+        }
+versions['0.0.0.1.5']['resolve_function']['functionWithListArgWithFunction'] = {
+        'given':{'expression':'sorted([int(0),1])'},
+        'then':[
+                '_result == \'[0,1]\''
                 ]
         }
