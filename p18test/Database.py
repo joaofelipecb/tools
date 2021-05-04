@@ -12,3 +12,8 @@ versions['0.0.0.1.4']['connect']['basic'] = {
         'then':['_result == True']
         }
 versions['0.0.0.1.5'] = copy.deepcopy(versions['0.0.0.1.4'])
+versions['0.0.0.1.5']['query'] = {}
+versions['0.0.0.1.5']['query']['basic'] = {
+        'given':{'query':'select teste from teste'},
+        'then':['_result == [(\'teste\')]']
+        }
