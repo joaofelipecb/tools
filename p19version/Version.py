@@ -20,4 +20,7 @@ versions['0.0.0.1.4']['branches'] = copy.deepcopy(versions['0.0.0.1.3']['branche
 versions['0.0.0.1.5'] = {}
 versions['0.0.0.1.5']['date'] = datetime.datetime.strptime('2021-05-04','%Y-%m-%d')
 versions['0.0.0.1.5']['branches'] = copy.deepcopy(versions['0.0.0.1.4']['branches'])
+versions['0.0.0.1.6'] = {}
+versions['0.0.0.1.6']['date'] = datetime.datetime.strptime('2021-05-05','%Y-%m-%d')
+versions['0.0.0.1.6']['branches'] = copy.deepcopy(versions['0.0.0.1.5']['branches'])
 

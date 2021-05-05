@@ -17,3 +17,5 @@ versions['0.0.0.1.5']['query']['basic'] = {
         'given':{'query':'select teste from teste'},
         'then':['_result == [(\'teste\')]']
         }
+
+versions['0.0.0.1.6'] = copy.deepcopy(versions['0.0.0.1.5'])

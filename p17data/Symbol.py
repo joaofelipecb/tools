@@ -105,3 +105,5 @@ versions['0.0.0.1.5']['resolve_function']['rules'].append({
         'condition':'tools.p24command.Symbol.resolve_function_is_arg_empty_list_end',
         'consequence':'tools.p24command.Symbol.resolve_function_end_arg_empty_list'
         })
+
+versions['0.0.0.1.6'] = copy.deepcopy(versions['0.0.0.1.5'])

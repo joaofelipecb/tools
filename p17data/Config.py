@@ -1,6 +1,6 @@
 import tools.p17data.ConfigSecurity
 name = 'Tools'
-version = '0.0.0.1.5'
+version = '0.0.0.1.6'
 database = {}
 database['default'] = {}
 database['default']['dbms'] = tools.p17data.ConfigSecurity.database['default']['dbms']
