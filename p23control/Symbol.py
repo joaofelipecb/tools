@@ -20,6 +20,9 @@ def resolve(expression,namespace=None,object=None):
         return resolve_list_literal(expression,namespace,object)
     if object is not None:
         return resolve_variable(expression,namespace,object)
+    if namespace is not None:
+        if expression in namespace:
+            return resolve_variable(expression,namespace,object)
     return resolve_module(expression,namespace,object)
 
 def resolve_module(expression,namespace=None,object=None):

@@ -61,7 +61,7 @@ def resolve_function_is_separator_args(escope):
 
 def resolve_function_add_args(escope):
     import tools.p23control.Symbol
-    resolved = tools.p23control.Symbol.resolve(escope['buffer'])
+    resolved = tools.p23control.Symbol.resolve(escope['buffer'],escope['namespace'])
     escope['args'].append(resolved)
     escope['buffer'] = ''
 
