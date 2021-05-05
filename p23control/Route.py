@@ -1,7 +1,9 @@
 import requests
-import p17data.Route
-import p17data.Config
+import tools.p17data.Config
+import tools.p17data.Route
 import tools.p23control.Symbol
+import p17data.Config
+import p17data.Route
 
 def route(path):
     import tools.p24command.Route
@@ -19,7 +21,7 @@ def route_match(escope, route):
     tools.p24command.Route.route_match_init(escope, route)
     if tools.p24command.Route.route_match_is_not_same_amount_parts(escope, route):
         return False
-    version = p17data.Route.versions[p17data.Config.version]
+    version = tools.p17data.Route.versions[tools.p17data.Config.version]
     rules = version['route_match']['rules']
     for escope['part'] in range(0,tools.p24command.Route.route_match_parts_amout(escope)):
         tools.p23control.Rule.apply(escope, rules)
