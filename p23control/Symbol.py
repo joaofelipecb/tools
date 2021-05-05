@@ -63,39 +63,15 @@ def resolve_list_literal(expression,namespace=None,object=None):
     return [resolve(item) for item in items]
 
 def resolve_function(expression,namespace=None,object=None):
+    import tools.p23control.Rule
     escope = {}
     tools.p24command.Symbol.resolve_function_init(escope,expression,namespace,object)
     rules = tools.p17data.Symbol.versions[tools.p17data.Config.version]['resolve_function']['rules']
-    for i in range(0,len(expression)):
-        if tools.p24command.Symbol.resolve_function_is_after_call(escope,i):
-            return tools.p24command.Symbol.resolve_function_resolve_after_call(escope,i)
-        for rule in rules:
-            matched = False
-            if resolve(rule['condition'])(escope,i):
-                matched = True
-                resolve(rule['consequence'])(escope,i)
-                break
-        if not matched:
-            raise Exception('No rule matched')
+    for escope['i'] in range(0,len(expression)):
+        if tools.p24command.Symbol.resolve_function_is_after_call(escope):
+            return tools.p24command.Symbol.resolve_function_resolve_after_call(escope)
+        tools.p23control.Rule.apply(escope, rules)
     return tools.p24command.Symbol.resolve_function_finish(escope)
-
-def split_func_args(expression):
-    version = tools.p17data.Symbol.versions[tools.p17data.Config.version]
-    posArgBegin = expression.index(version['resolve_function']['functionArgumentBegin'])
-    posArgEnd = expression.rindex(version['resolve_function']['functionArgumentEnd'])
-    func = expression[0:posArgBegin]
-    argsName = expression[posArgBegin+1:posArgEnd]
-    if len(argsName):
-        args = argsName.split(version['resolve_function']['functionArgumentSeparator'])
-    else:
-        args = []
-    attributeName = None
-    try:
-        posAttrBegin = expression.index(version['resolve_function']['moduleSeparation'],posArgEnd)
-        attributeName = expression[posAttrBegin+1:]
-    except ValueError:
-        pass
-    return func, args, attributeName
 
 def resolve_condition(expression,namespace=None,object=None):
     operatorsName = split_condition(expression)
