@@ -22,3 +22,9 @@ def query(query,bind):
     result = cur.fetchall()
     return result
 
+def execute(query,bind):
+    global link
+    cur = link.cursor()
+    result = cur.execute(query,bind)
+    return result
+
