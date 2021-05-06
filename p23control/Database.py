@@ -15,14 +15,14 @@ def connect(profile='default'):
 
 connect()
 
-def query(query,bind):
+def query(query,bind=[]):
     global link
     cur = link.cursor()
     cur.execute(query,bind)
     result = cur.fetchall()
     return result
 
-def execute(query,bind):
+def execute(query,bind=[]):
     global link
     cur = link.cursor()
     result = cur.execute(query,bind)
