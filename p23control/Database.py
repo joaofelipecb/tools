@@ -15,10 +15,10 @@ def connect(profile='default'):
 
 connect()
 
-def query(query):
+def query(query,bind):
     global link
     cur = link.cursor()
-    cur.execute(query)
+    cur.execute(query,bind)
     result = cur.fetchall()
     return result
 
